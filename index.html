@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>触屏轮播插件</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="m-container">
+    <div class="j-image-box">
+      <img src="img/06.jpg" alt="风景">
+      <img src="img/07.jpg" alt="风景">
+      <img src="img/08.jpg" alt="风景">
+      <img src="img/09.jpg" alt="风景">
+      <img src="img/10.jpg" alt="风景">
+      <img src="img/11.jpg" alt="风景">
+      <img src="img/12.jpg" alt="风景">
+      <div class="j-bullet-nav">
+        <span class="j-bullet"></span>
+        <span class="j-bullet"></span>
+        <span class="j-bullet"></span>
+        <span class="j-bullet"></span>
+        <span class="j-bullet"></span>
+        <span class="j-bullet"></span>
+        <span class="j-bullet"></span>
+      </div>
+    </div>
+  </div>
+  <script src="../jquery/jquery-1.11.1.min.js"></script>
+  <script src="coffee/jquery.touchSlider.js"></script>
+  <script>
+  var slider = $('.j-image-box').touchSlider({
+    width: 600,
+    height: 300,
+    "navigator": ".j-bullet-nav"
+  });
+  slider.autoPlay();
+  </script>
+</body>
+</html>
