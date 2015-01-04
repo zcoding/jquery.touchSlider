@@ -12,11 +12,12 @@ class Player
     @Length = Length
     @currentIndex = currentIndex
     playing = playAction || playing
-  # config: (options) ->
-  #   $.extend @options, options
   # 自动轮播控制
   autoPlay: (interval) ->
+    isRunning = true
     interval = interval || 3000
+    if timer isnt null
+      return this
     timer = setInterval (() =>
       if isRunning
         @currentIndex = if @currentIndex+1 > @Length-2 then 1 else @currentIndex+1
@@ -49,6 +50,14 @@ class Player
     N = if N > 0 then N else @Length - 2 + N
     @currentIndex = N
     playing.apply this
+    return this
+  # 停止播放
+  stop: () ->
+    isRunning = false
+    if timer is null
+      return this
+    clearInterval timer
+    timer = null
     return this
 
 $.fn.touchSlider = (options) ->
@@ -87,7 +96,7 @@ $.fn.touchSlider = (options) ->
     left: 0
     textAlign: "center"
   }
-  
+
   $bullets.css({
     display: "inline-block"
     margin: "10px 10px 0 0"
