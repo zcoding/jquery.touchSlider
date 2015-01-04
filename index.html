@@ -30,11 +30,12 @@
   <script src="coffee/jquery.touchSlider.js"></script>
   <script>
   var slider = $('.j-image-box').touchSlider({
-    width: 600,
-    height: 300,
-    "navigator": ".j-bullet-nav"
+    "width": 600,
+    "height": 300,
+    "navigator": ".j-bullet-nav",
+    "speed": 150
   });
-  slider.autoPlay();
+  slider.autoPlay(2000);
   </script>
 </body>
 </html>
