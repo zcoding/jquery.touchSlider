@@ -119,11 +119,58 @@ $.fn.touchSlider = (options) ->
     deltaTouch.sy = 0
 
   class Slider
+    timer = null
+    isRunning = true
     constructor: () ->
-      @currentIndex = 0
+      @currentIndex = currentIndex
     config: (options) ->
       $.extend @options, options
+    # 自动轮播控制
     autoPlay: (interval) ->
+      interval = interval || 3000
+      timer = setInterval (() ->
+        if isRunning
+          currentIndex = if currentIndex+1 > Length-2 then 1 else currentIndex+1
+          ci = currentIndex
+          $images.each (index, ele) ->
+            $(ele).animate {
+              left: (index - ci - 1) * Width
+            }, 100
+          currentIndex += 1
+          $bullets.css("background", "#AAAAAA").eq(currentIndex-1).css("background", "#FFFFFF")
+        ), interval
+      return this
+    # 暂停/自动轮播
+    togglePlay: () ->
+      isRunning = !isRunning
+      return this
+    # 播放下一张
+    next: () ->
+      ci = currentIndex
+      if currentIndex is Length-2 then ci = 0
+      @play.apply this, [ci+1]
+      return this
+    # 播放上一张
+    prev: () ->
+      ci = currentIndex
+      if currentIndex is 1 then ci = 0
+      @play.apply this, [ci-1]
+      return this
+    # 播放第N张
+    play: (N = 1) ->
+      # 计算真实索引
+      if Math.abs(N) > (Length - 2)
+        N = N % (Length - 2)
+      if N is 0
+        return this
+      N = if N > 0 then N else Length - 2 + N
+      ci = N
+      $images.each (index, ele) ->
+        $(ele).animate {
+          left: (index - ci) * Width
+        }
+      currentIndex = N
+      $bullets.css("background", "#AAAAAA").eq(currentIndex-1).css("background", "#FFFFFF")
       return this
 
   return new Slider()
