@@ -26,16 +26,15 @@
       </div>
     </div>
   </div>
-  <script src="../jquery/jquery-1.11.1.min.js"></script>
+  <script src="../jquery/jquery-1.11.2.min.js"></script>
   <script src="coffee/jquery.touchSlider.js"></script>
   <script>
   var slider = $('.j-image-box').touchSlider({
-    "width": 600,
-    "height": 300,
-    "navigator": ".j-bullet-nav",
-    "speed": 150
+    onSlide: function(index) {
+      console.log(index + ' playing...');
+    }
   });
-  slider.autoPlay(2000);
+  slider.autoPlay(3000);
   </script>
 </body>
 </html>

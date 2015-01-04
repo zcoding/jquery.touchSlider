@@ -1,8 +1,9 @@
 defaults =
-  speed: 100
-  navigator: ".z-bullet"
+  speed: 150
+  navigator: ".j-bullet-nav"
   classNames:
     image: "z-image"
+  onSlide: () -> false
 
 class Player
   timer = null
@@ -62,8 +63,13 @@ class Player
 
 $.fn.touchSlider = (options) ->
   options = $.extend {}, defaults, options
-  Width = options.width
-  Height = options.height
+
+  $this = $(this)
+  _$img = $this.find('img')
+  _width = _$img.width()
+  _height = _$img.height()
+  Width = options.width || _width
+  Height = options.height || _height
 
   speed = options.speed
 
@@ -74,7 +80,6 @@ $.fn.touchSlider = (options) ->
 
   noMore = "<div style=\"font-size: 18px;color: #888;text-align: center;line-height:#{ Height }px;\" class=\"j-no_more\">别拉了！真的没有了。。。</div>"
 
-  $this = $(this)
   $this.prepend noMore
   $this.append noMore
 
@@ -141,6 +146,7 @@ $.fn.touchSlider = (options) ->
         left: (index - @currentIndex) * Width
       }, speed
     $bullets.css("background", "#AAAAAA").eq(@currentIndex-1).css("background", "#FFFFFF")
+    options.onSlide.apply this, [@currentIndex]
     true)
 
   move = (delta) ->
